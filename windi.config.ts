@@ -29,7 +29,9 @@ export default defineConfig({
       primary: "var(--primary)",
       "primary-variant": "var(--primary-variant)",
       secondary: "var(--secondary)",
-      "secondary-variant": "var(--secondary-variant)"
+      "secondary-variant": "var(--secondary-variant)",
+      black: "var(--black)",
+      white: "var(--white)"
     }
   }
 })

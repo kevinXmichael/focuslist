@@ -24,13 +24,3 @@
     transform: scale($std-shrink-factor) !important;
   }
 }
-
-// .flip-horizontally {
-// 	transform: rotateY(180deg);
-// 	transition: $std-transition-duration;
-
-// 	&--back {
-// 		// transform: rotateY(180deg);
-// 		transition: $std-transition-duration;
-// 	}
-// }
