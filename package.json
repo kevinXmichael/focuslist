@@ -1,0 +1,20 @@
+{
+  "author": "Kevin Michael Schott",
+  "version": "0.0.1",
+  "name": "focuslist",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "sass": "^1.49.4",
+    "svelte": "^3.44.0",
+    "svelte-windicss-preprocess": "^4.2.5",
+    "vite": "^2.7.2",
+    "vite-plugin-windicss": "^1.6.3",
+    "windicss": "^3.4.3"
+  }
+}

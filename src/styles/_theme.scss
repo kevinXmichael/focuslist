@@ -1,0 +1,28 @@
+.theme {
+  &--dark {
+    @extend .theme;
+    --primary: #0f172a;
+    --primary-variant: #1e293b;
+    --secondary: #ffffff;
+    --secondary-variant: #ffffff66;
+  }
+
+  &--light {
+    @extend .theme;
+    --primary: #ffffff;
+    --primary-variant: #ffffff66;
+    --secondary: #0f172a;
+    --secondary-variant: #1e293b;
+  }
+}
+
+.std-border {
+  @apply border-2;
+}
+
+.spacer {
+  // @apply flex grow;
+  display: flex !important;
+  flex: 1 !important;
+  flex-grow: 1 !important;
+}

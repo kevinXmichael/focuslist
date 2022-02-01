@@ -1,0 +1,29 @@
+@import "variables";
+
+:root {
+  --app-max-width: 100rem;
+  --header-height: 3rem;
+  --footer-height: 3rem;
+}
+
+html,
+body {
+  @extend .fancy-scrollbar;
+}
+
+main {
+  width: 100% !important;
+  max-width: var(--app-max-width) !important;
+}
+
+.std-height {
+  height: $std-component-height;
+  max-height: $std-component-height;
+}
+
+@import "font";
+@import "animations";
+@import "buttons";
+@import "input";
+@import "scroll";
+@import "theme";
