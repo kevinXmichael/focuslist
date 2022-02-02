@@ -20,6 +20,11 @@ main {
   max-height: $std-component-height;
 }
 
+.spacer {
+  flex: 1 !important;
+  flex-grow: 1 !important;
+}
+
 @import "font";
 @import "animations";
 @import "buttons";
