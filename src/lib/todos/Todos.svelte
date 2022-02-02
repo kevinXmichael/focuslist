@@ -3,9 +3,10 @@
   import Fa from "svelte-fa"
   import { faPlusSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons"
   import { _ } from "svelte-i18n"
+  import { isOlderThan1Day } from "@/lib/date-time"
 
-  $: activeTodos = $todos // TODO: FILTER BY DATE one day ago, others push to archived?
-  $: archivedTodos = [...$todos] // TODO: FILTER BY DATE
+  $: activeTodos = $todos.filter((todo) => isOlderThan1Day(todo.created))
+  $: archivedTodos = $todos.filter((todo) => !isOlderThan1Day(todo.created))
 
   const iconClass =
     "flex flex-col items-center justify-center std-hover text-white ml-sm"
@@ -14,7 +15,7 @@
   let hoveredRow = -1
 
   function addNewTodo() {
-    if (addTodo({ title: newTodoTitle })) {
+    if (addTodo(newTodoTitle)) {
       newTodoTitle = ""
     }
   }
@@ -62,4 +63,24 @@
       </div>
     </div>
   {/if}
+  <div class="spacer" />
+  <h2 class="my-md">{$_("todos.archived")}</h2>
+  {#each archivedTodos as todo, index}
+    <div
+      class="flex flex-row flex-nowrap mb-sm h-full w-full items-center justify-center"
+      on:mouseover={() => updateHoveredRow(index)}
+      on:mouseleave={() => updateHoveredRow(-1)}
+    >
+      <input class="input--std" value={todo.title} />
+      <div class="flex flex-row flex-nowrap">
+        <div on:click={(event) => deleteTodo(index)} class={iconClass}>
+          {#if index === hoveredRow}
+            <Fa icon={faTrashAlt} style={iconStyle} />
+          {:else}
+            <div style={iconStyle} />
+          {/if}
+        </div>
+      </div>
+    </div>
+  {/each}
 </div>

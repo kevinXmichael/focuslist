@@ -13,10 +13,10 @@ export function safeTodos() {
   }
 }
 
-export function addTodo(todo = "") {
+export function addTodo(title = "") {
   if (get(todos).length < MAX_TODOS) {
     todos.update((todos) => {
-      return [...todos, todo]
+      return [...todos, { title, created: new Date() }]
     })
     return safeTodos()
   } else {
