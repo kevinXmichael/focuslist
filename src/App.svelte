@@ -8,10 +8,8 @@
 
 {#await boot() then result}
   {#if !$isLoading}
-    <main
-      class="p-md m-auto w-full h-full flex flex-col items-center justify-center"
-    >
-      <h1>{$_("title")}</h1>
+    <main class="p-sm m-auto w-full h-full flex flex-col justify-center">
+      <h1 class="mb-md p-sm">{$_("title")}</h1>
       <Todos />
     </main>
   {/if}

@@ -2,34 +2,64 @@
   import { MAX_TODOS, todos, addTodo, deleteTodo, safeTodos } from "@/lib/todos"
   import Fa from "svelte-fa"
   import { faPlusSquare, faTrashAlt } from "@fortawesome/free-solid-svg-icons"
+  import { _ } from "svelte-i18n"
 
   $: activeTodos = $todos // TODO: FILTER BY DATE one day ago, others push to archived?
   $: archivedTodos = [...$todos] // TODO: FILTER BY DATE
+
+  const iconClass =
+    "flex flex-col items-center justify-center std-hover text-white ml-sm"
+  const iconStyle = "width: 1.5rem; height: 1.5rem;"
   let newTodoTitle = ""
+  let hoveredRow = -1
 
   function addNewTodo() {
-    addTodo({ title: newTodoTitle })
-    newTodoTitle = ""
+    if (addTodo({ title: newTodoTitle })) {
+      newTodoTitle = ""
+    }
+  }
+
+  function isEnter(event = false) {
+    return event?.keyCode === 13
+  }
+
+  function updateHoveredRow(index = -1) {
+    hoveredRow = index
   }
 </script>
 
 <div class="flex flex-col h-full w-full">
-  {#each activeTodos as todo, i}
-    <div class="flex flex-row flex-nowrap mb-sm h-full w-full">
-      <!-- TODO: HOW TO BIND/SAFE NEW TODOS? -->
-      <input value={todo.title} />
-      <div class="spacer" />
-      <div class="flex flex-row flex-nowrap ml-sm">
-        <div on:click={(event) => deleteTodo(i)} class="std-hover text-white">
-          <Fa icon={faTrashAlt} size="lg" /> Remove
+  {#each activeTodos as todo, index}
+    <div
+      class="flex flex-row flex-nowrap mb-sm h-full w-full items-center justify-center"
+      on:mouseover={() => updateHoveredRow(index)}
+      on:mouseleave={() => updateHoveredRow(-1)}
+    >
+      <input class="input--std" value={todo.title} />
+      <div class="flex flex-row flex-nowrap">
+        <div on:click={(event) => deleteTodo(index)} class={iconClass}>
+          {#if index === hoveredRow}
+            <Fa icon={faTrashAlt} style={iconStyle} />
+          {:else}
+            <div style={iconStyle} />
+          {/if}
         </div>
       </div>
     </div>
   {/each}
-  <div class="flex flex-row flex-nowrap w-full">
-    <input bind:value={newTodoTitle} />
-    <div on:click={addNewTodo} class="std-hover text-white">
-      <Fa icon={faPlusSquare} size="sm" /> Add
+  {#if activeTodos.length < MAX_TODOS}
+    <div class="flex flex-row flex-nowrap w-full">
+      <input
+        class="input--active"
+        bind:value={newTodoTitle}
+        on:keypress={(event) => {
+          if (isEnter(event)) addNewTodo()
+        }}
+        placeholder={`${$_("todos.placeholder")}`}
+      />
+      <div on:click={addNewTodo} class={iconClass}>
+        <Fa icon={faPlusSquare} style={iconStyle} />
+      </div>
     </div>
-  </div>
+  {/if}
 </div>
