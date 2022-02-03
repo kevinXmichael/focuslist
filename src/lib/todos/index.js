@@ -1,8 +1,16 @@
 import { get, writable } from "svelte/store"
 
-export const MAX_TODOS = 5
+export const iconClass =
+  "flex flex-col items-center justify-center std-hover text-white ml-sm"
+export const iconStyle = "width: 1.5rem; height: 1.5rem;"
 
+export const hoveredRow = writable(-1)
+export const MAX_TODOS = 5
 export const todos = writable(JSON.parse(localStorage.getItem("todos")) ?? [])
+
+export function updateHoveredRow(newIndex = -1) {
+  hoveredRow.set(newIndex)
+}
 
 export function safeTodos() {
   try {
@@ -26,7 +34,13 @@ export function addTodo(title = "") {
 }
 
 export function deleteTodo(index) {
-  todos.update((todos) => {
-    return todos.filter((todo, index_) => index !== index_)
-  })
+  try {
+    todos.update((todos) => {
+      return todos.filter((todo, index_) => index !== index_)
+    })
+    return safeTodos()
+  } catch (err) {
+    console.error(`❌ Cannot delete todos, error was: ${err}`)
+    return false
+  }
 }

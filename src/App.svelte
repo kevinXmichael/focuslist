@@ -8,7 +8,10 @@
 
 {#await boot() then result}
   {#if !$isLoading}
-    <main class="p-sm m-auto w-full h-full flex flex-col justify-center">
+    <main
+      class="p-sm m-auto flex flex-col justify-center"
+      style="height: 99vh; width: 99vw;"
+    >
       <h1 class="mb-md p-sm">{$_("title")}</h1>
       <Todos />
     </main>
