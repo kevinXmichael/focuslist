@@ -12,6 +12,7 @@
   let newTodoTitle = ""
   function addNewTodo() {
     if (addTodo(newTodoTitle)) {
+      // reset for next todo
       newTodoTitle = ""
     }
   }

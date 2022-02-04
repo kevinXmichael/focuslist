@@ -1,4 +1,5 @@
 import { get, writable } from "svelte/store"
+import { isOlderThan2Days } from "@/lib/date-time"
 
 export const iconClass =
   "flex flex-col items-center justify-center std-hover text-white ml-sm"
@@ -6,7 +7,13 @@ export const iconStyle = "width: 1.5rem; height: 1.5rem;"
 
 export const hoveredRow = writable(-1)
 export const MAX_TODOS = 5
-export const todos = writable(JSON.parse(localStorage.getItem("todos")) ?? [])
+export const todos = initTodos()
+safeTodos() // we safe all todos after initTodos() to automatically delete old ones
+
+function initTodos() {
+  const todos = JSON.parse(localStorage.getItem("todos")) ?? []
+  return writable(todos.filter((todo) => !isOlderThan2Days(todo.created)))
+}
 
 export function updateHoveredRow(newIndex = -1) {
   hoveredRow.set(newIndex)
@@ -18,6 +25,7 @@ export function safeTodos() {
     return true
   } catch (err) {
     console.error(`❌ Cannot safe todos, error was: ${err}`)
+    return false
   }
 }
 
