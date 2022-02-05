@@ -12,6 +12,7 @@ safeTodos() // we safe all todos after initTodos() to automatically delete old o
 
 function initTodos() {
   const todos = JSON.parse(localStorage.getItem("todos")) ?? []
+  todos.sort((a, b) => new Date(b.created) - new Date(a.created))
   return writable(todos.filter((todo) => !isOlderThan2Days(todo.created)))
 }
 
