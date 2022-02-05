@@ -45,7 +45,7 @@
     <div class="spacer" />
     <h2 class="my-md">{$_("todos.archived")}</h2>
     {#each archivedTodos as todo, index}
-      <Todo {todo} {index} />
+      <Todo {todo} {index} archived={true} />
     {/each}
   {/if}
 </div>

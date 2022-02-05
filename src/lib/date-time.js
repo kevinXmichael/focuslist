@@ -16,8 +16,16 @@ function isOlderThanDays(days_ = 1, date) {
   return olderThan1Day
 }
 
-export function hoursLeft(date) {
+export function hoursLeftActive(date) {
+  return hoursLeftInDays(date, 1)
+}
+
+export function hoursLeftArchived(date) {
+  return hoursLeftInDays(date, 2)
+}
+
+export function hoursLeftInDays(date, days = 1) {
   const dateDiff = Math.abs(Date.now() - new Date(date))
-  const hours = Math.round(24 * (1 - dateDiff / ONE_DAY))
+  const hours = Math.round(days * 24 * (1 - dateDiff / (ONE_DAY * days)))
   return hours
 }
