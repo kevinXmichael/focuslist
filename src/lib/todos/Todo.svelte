@@ -22,15 +22,11 @@
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <div
   class="flex flex-row flex-nowrap mb-sm w-full items-center justify-center"
+  style="position: relative;"
   on:mouseover={() => updateHoveredRow(hoveredRowName(index))}
   on:mouseleave={() => updateHoveredRow(hoveredRowName())}
 >
   <input class="input--std" value={todo.title} />
-  <h2>
-    hours {archived
-      ? hoursLeftArchived(todo.created)
-      : hoursLeftActive(todo.created)}
-  </h2>
   <div class="flex flex-row flex-nowrap">
     <div on:click={(event) => deleteTodo(index)} class={iconClass}>
       {#if hoveredRowName(index) === $hoveredRow}
@@ -39,5 +35,12 @@
         <div style={iconStyle} />
       {/if}
     </div>
+  </div>
+  <div class="text-no-select" style="position: absolute; right: 2.75rem;">
+    {#if hoveredRowName(index) === $hoveredRow}
+      {archived
+        ? hoursLeftArchived(todo.created)
+        : hoursLeftActive(todo.created)}h
+    {/if}
   </div>
 </div>
